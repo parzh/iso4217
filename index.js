@@ -1,4 +1,4 @@
-const data = require("./data.json");
+const data = require("./data");
 
 module.exports = {
 	published: data.published,
