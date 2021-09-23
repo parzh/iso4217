@@ -6,7 +6,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "start": "node src",
+    "start": "node .",
     "preversion": "test \"${USING_CUSTOM_VERSIONING_SCRIPT:?''}\"",
     "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --allow-same-version --git-tag-version --sign-git-tag"
   }
