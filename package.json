@@ -4,6 +4,14 @@
   "version": "0.0.2",
   "license": "MIT",
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parzh/iso-4217.git"
+  },
+  "bugs": {
+    "url": "https://github.com/parzh/iso-4217/issues"
+  },
+  "homepage": "https://github.com/parzh/iso-4217#readme",
   "main": "index.js",
   "scripts": {
     "start": "node .",
