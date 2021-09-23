@@ -1,5 +1,5 @@
 {
-  "name": "iso-4217",
+  "name": "@iso4217/json",
   "author": "Dima Parzhitsky <parzhitsky@gmail.com>",
   "version": "0.0.1",
   "license": "MIT",
