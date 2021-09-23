@@ -6,6 +6,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "start": "node src"
+    "start": "node src",
+    "v": "npm version --allow-same-version --git-tag-version --sign-git-tag"
   }
 }
