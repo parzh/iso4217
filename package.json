@@ -12,10 +12,23 @@
     "url": "https://github.com/parzh/iso-4217/issues"
   },
   "homepage": "https://github.com/parzh/iso-4217#readme",
+  "files": [
+    "/**/*.js",
+    "/**/*.js.map",
+    "/**/*.d.ts",
+    "/data.json",
+    "/README.md"
+  ],
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "start": "node .",
+    "build": "tsc --project ./tsconfig.production.json",
     "preversion": "test \"${USING_CUSTOM_VERSIONING_SCRIPT:?''}\"",
     "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --allow-same-version --git-tag-version --sign-git-tag"
+  },
+  "devDependencies": {
+    "@types/node": "16.9.6",
+    "ts-node": "10.2.1",
+    "typescript": "4.4.3"
   }
 }
