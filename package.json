@@ -1,12 +1,11 @@
 {
-  "version": "0.0.1",
-  "license": "UNLICENSED",
+  "name": "iso-4217",
   "author": "Dima Parzhitsky <parzhitsky@gmail.com>",
+  "version": "0.0.1",
+  "license": "MIT",
   "keywords": [],
-  "private": true,
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src"
   }
 }
