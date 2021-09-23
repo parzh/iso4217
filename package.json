@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "author": "Dima Parzhitsky <parzhitsky@gmail.com>",
+  "keywords": [],
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src"
+  }
+}
