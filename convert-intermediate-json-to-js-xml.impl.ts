@@ -47,6 +47,9 @@ function populateNode(
 	prop: string,
 	data = host[prop],
 ): void {
+	if (data == null || Number.isNaN(data))
+		return;
+
 	if (isPrimitive(data)) {
 		if (prop === "$t") {
 			assertCanSetLiteralContent(node);
