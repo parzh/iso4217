@@ -63,6 +63,18 @@ To be done
 
 _Note: all examples here are using TypeScript syntax._
 
+### `getJson(): Promise<JSXml>`
+
+Programmatically read and parse the `iso4217.json` file.
+
+```ts
+import { getJson } from "@iso4217/json";
+
+async function main() {
+  const json = await getJson();
+}
+```
+
 ### `getVersion(): string`
 
 Get version of the standard that is used in this package. Version is an ISO date.
