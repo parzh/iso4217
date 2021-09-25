@@ -1,5 +1,5 @@
 import parser from "xml2json";
-import type { Primitive } from "./iso-4217-json.type";
+import type { Primitive } from "./js-xml.type";
 
 export interface Intermediate {
 	[key: string]: Primitive | Intermediate | Intermediate[];
