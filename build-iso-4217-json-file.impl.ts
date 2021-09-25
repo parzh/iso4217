@@ -4,6 +4,7 @@ import convertIntermediateJsonToISO4217Json from "./convert-intermediate-json-to
 import writeToFile, { writeJsonToFile } from "./write-to-file";
 
 /** @private */
+// FIXME: there's a typo here: "currrency"
 const ISO_4217_XML_URL =
 	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
 
