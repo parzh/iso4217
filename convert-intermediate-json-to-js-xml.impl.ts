@@ -89,12 +89,14 @@ export default function convertIntermediateJsonToJSXml(intermediate: Intermediat
 		$data: [],
 	};
 
-	if (key != null)
+	if (key != null) {
 		populateNode(node, intermediate, key);
 
-	else
-		for (const key in intermediate)
-			populateNode(node, intermediate, key);
+		return node.$data[0];
+	}
+
+	for (const key in intermediate)
+		populateNode(node, intermediate, key);
 
 	return node;
 }
