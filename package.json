@@ -16,7 +16,7 @@
     "/**/*.js",
     "/**/*.js.map",
     "/**/*.d.ts",
-    "/data.json",
+    "/iso4217.json",
     "/README.md"
   ],
   "main": "index.js",

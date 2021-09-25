@@ -2,9 +2,9 @@
 node_modules
 
 # Data
-*.xml
-intermediate.json
-data.json
+iso4217.xml
+iso4217.intermediate.json
+iso4217.json
 
 # Build
 *.js

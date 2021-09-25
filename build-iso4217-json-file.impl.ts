@@ -5,21 +5,21 @@ import writeToFile, { writeJsonToFile } from "./write-to-file";
 
 /** @private */
 // FIXME: there's a typo here: "currrency"
-const ISO_4217_XML_URL =
+const ISO4217_XML_URL =
 	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
 
 async function buildISO4217JsonFile() {
-	const xml = await httpGet(ISO_4217_XML_URL);
+	const xml = await httpGet(ISO4217_XML_URL);
 
-	writeToFile("source.xml", xml);
+	writeToFile("iso4217.xml", xml);
 
 	const intermediateJson = convertXmlToIntermediateJson(xml);
 
-	writeJsonToFile("intermediate.json", intermediateJson);
+	writeJsonToFile("iso4217.intermediate.json", intermediateJson);
 
 	const jsXml = convertIntermediateJsonToJSXml(intermediateJson, "ISO_4217");
 
-	await writeJsonToFile("data.json", jsXml);
+	await writeJsonToFile("iso4217.json", jsXml);
 }
 
 buildISO4217JsonFile();
