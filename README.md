@@ -3,11 +3,11 @@
 The original [ISO 4217 XML file][1] converted to JSON.
 
 ## Features of `@iso4217/json`
-1. All the data from the original XML file, but already converted to JSON **ahead of time**, so that you don't have to.
-1. Thanks to <!-- TODO: hwæt? -->, no data is lost during conversion, – all the information in the original XML is preserved in the JSON file.
+1. All the data from the original XML file, but already converted to JSON ahead of time, – **importing this package is actually the same as importing a plain JSON file**.
 1. All the data is guaranteed to be up-to-date at all times:
     - the data in the original XML file [is maintained by the Swiss Association for Standardization][2] (SNV);
     - the data in the resulting JSON file [is automatically updated by CI/CD script][3] on a daily basis;
+1. Thanks to the custom-defined format, no data is lost from the original XML during conversion, – all the information is preserved in the JSON file.
 1. The codebase is strongly typed, thanks to using the latest version of TypeScript.
 1. The project [is open source][4], and all the contributions [are very welcome][5]!
 
