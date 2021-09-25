@@ -25,10 +25,10 @@
   "types": "index.d.ts",
   "scripts": {
     "_ts-node": "export NODE_OPTIONS=\"--unhandled-rejections=strict\"; ts-node --project tsconfig.json",
-    "build-iso4217-json-file": "npm run _ts-node -- ./build-iso4217-json-file.impl.ts",
-    "build-iso4217-json-file-if-needed": "if [ ! -f \"./iso4217.json\" ]; then npm run build-iso4217-json-file; fi",
+    "build-iso4217-json": "npm run _ts-node -- ./build-iso4217-json.impl.ts",
+    "build-iso4217-json-if-needed": "if [ ! -f \"./iso4217.json\" ]; then npm run build-iso4217-json; fi",
     "build:only": "tsc --project ./tsconfig.production.json",
-    "prebuild": "npm run build-iso4217-json-file-if-needed",
+    "prebuild": "npm run build-iso4217-json-if-needed",
     "build": "npm run build:only",
     "preversion": "test ${USING_CUSTOM_VERSIONING_SCRIPT:?''}",
     "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version --sign-git-tag"
