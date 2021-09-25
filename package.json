@@ -24,7 +24,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build-iso4217-json-file": "export NODE_OPTIONS=\"--unhandled-rejections=strict\"; ts-node --project tsconfig.json ./build-iso4217-json-file.impl.ts",
+    "_ts-node": "export NODE_OPTIONS=\"--unhandled-rejections=strict\"; ts-node --project tsconfig.json",
+    "build-iso4217-json-file": "npm run _ts-node -- ./build-iso4217-json-file.impl.ts",
     "build:only": "tsc --project ./tsconfig.production.json",
     "prebuild": "npm run build-iso4217-json-file",
     "build": "npm run build:only",
