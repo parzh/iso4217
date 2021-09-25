@@ -8,7 +8,7 @@ import writeToFile, { writeJsonToFile } from "./write-to-file";
 const ISO_4217_XML_URL =
 	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
 
-async function test() {
+async function buildISO4217JsonFile() {
 	const iso4217Xml = await httpGet(ISO_4217_XML_URL);
 
 	writeToFile("source.xml", iso4217Xml);
@@ -22,4 +22,4 @@ async function test() {
 	await writeJsonToFile("data.json", iso4217Json);
 }
 
-test();
+buildISO4217JsonFile();
