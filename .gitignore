@@ -1,5 +1,12 @@
+# Third party
 node_modules
+
+# Data
+*.xml
+intermediate.json
 data.json
+
+# Build
 *.js
 *.js.map
 *.d.ts
