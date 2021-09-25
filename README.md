@@ -22,13 +22,29 @@ The original [ISO 4217 XML file][1] converted to JSON.
 #### TypeScript (NodeJS):
 
 ```ts
+// import-based approach
 import { json } from "@iso4217/json";
+```
+
+```ts
+// parsing approach
+import { getJson } from "@iso4217/json";
+
+const json = await getJson();
 ```
 
 #### JavaScript (CommonJS):
 
 ```ts
+// require-based approach
 const { json } = require("@iso4217/json");
+```
+
+```ts
+// parsing approach
+const { getJson } = require("@iso4217/json");
+
+const json = await getJson();
 ```
 
 #### JavaScript (ESModules):
