@@ -1,0 +1,65 @@
+name: Publish new release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  check-version-match:
+    name: Check versions in package* files match
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: |2
+          node -e "process.exit(require('./package.json').version !== require('./package-lock.json').version)"
+
+  check-version-new:
+    name: Check this version is brand new
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: |2
+          set -e
+
+          incoming_version=$(node -pe "require('./package.json').version;")
+
+          if [ ! -z "$(npm view @iso217/json@$incoming_version version)" ]; then
+            echo "This version ($incoming_version) is already published; please, update version by running 'npm version <version>'"
+            exit 1
+          fi
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: npm ci
+      - run: npm t
+
+  publish:
+    name: Publish this version
+    runs-on: ubuntu-20.04
+    needs:
+      - check-version-match
+      - check-version-new
+      # TODO: - tests
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: npm ci
+      - run: |2
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
+
+          npm publish --tag latest
