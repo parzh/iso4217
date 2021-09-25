@@ -14,7 +14,9 @@
   "homepage": "https://github.com/parzh/iso4217#readme",
   "files": [
     "/**/*.js",
+    "!/**/*.type.js",
     "/**/*.js.map",
+    "!/**/*.type.js.map",
     "/**/*.d.ts",
     "/iso4217.json",
     "/README.md"
@@ -26,14 +28,12 @@
     "build:only": "tsc --project ./tsconfig.production.json",
     "prebuild": "npm run build-iso4217-json-file",
     "build": "npm run build:only",
-    "postbuild": "del-cli **/*.type.js **/*.type.js.map",
     "preversion": "test ${USING_CUSTOM_VERSIONING_SCRIPT:?''}",
     "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --allow-same-version --git-tag-version --sign-git-tag"
   },
   "devDependencies": {
     "@types/node": "16.9.6",
     "@types/xml2json": "0.11.4",
-    "del-cli": "4.0.1",
     "ts-node": "10.2.1",
     "typescript": "4.4.3",
     "xml2json": "0.11.2"
