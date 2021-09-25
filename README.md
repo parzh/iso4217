@@ -33,8 +33,12 @@ const { json } = require("@iso4217/json");
 
 #### JavaScript (ESModules):
 
-<pre>To be done</pre>
+```
+To be done
+```
 
 #### JavaScript (browser, using `<script>` tag):
 
-<pre>To be done</pre>
+```
+To be done
+```
