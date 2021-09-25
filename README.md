@@ -17,9 +17,9 @@ The original [ISO 4217 XML file][1] converted to JSON.
   [4]: https://github.com/parzh/iso4217
   [5]: https://github.com/parzh/iso4217/issues
 
-## Usage:
+## Importing data:
 
-#### TypeScript (NodeJS):
+### TypeScript (NodeJS):
 
 ```ts
 // import-based approach
@@ -33,7 +33,7 @@ import { getJson } from "@iso4217/json";
 const json = await getJson();
 ```
 
-#### JavaScript (CommonJS):
+### JavaScript (CommonJS):
 
 ```ts
 // require-based approach
@@ -47,13 +47,13 @@ const { getJson } = require("@iso4217/json");
 const json = await getJson();
 ```
 
-#### JavaScript (ESModules):
+### JavaScript (ESModules):
 
 ```
 To be done
 ```
 
-#### JavaScript (browser, using `<script>` tag):
+### JavaScript (browser, using `<script>` tag):
 
 ```
 To be done
