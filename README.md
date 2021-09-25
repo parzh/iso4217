@@ -19,18 +19,16 @@ The original [ISO 4217 XML file][1] converted to JSON.
 
 ## Usage:
 
-#### TypeScript:
+#### TypeScript (NodeJS):
 
 ```ts
 import { json } from "@iso4217/json";
-import json from "@iso4217/json/data";
 ```
 
 #### JavaScript (CommonJS):
 
 ```ts
 const { json } = require("@iso4217/json");
-const json = require("@iso4217/json/data.json");
 ```
 
 #### JavaScript (ESModules):
