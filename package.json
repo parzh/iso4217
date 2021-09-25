@@ -29,7 +29,7 @@
     "prebuild": "npm run build-iso4217-json-file",
     "build": "npm run build:only",
     "preversion": "test ${USING_CUSTOM_VERSIONING_SCRIPT:?''}",
-    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --allow-same-version --git-tag-version --sign-git-tag"
+    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version --sign-git-tag"
   },
   "devDependencies": {
     "@types/node": "16.9.6",
