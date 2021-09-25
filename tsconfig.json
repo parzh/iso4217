@@ -6,6 +6,7 @@
 		// Output
 		"target": "es2017",
 		"module": "commonjs",
+		"noEmit": true,
 		"declaration": true,
 		"inlineSources": true,
 		"sourceMap": true,
