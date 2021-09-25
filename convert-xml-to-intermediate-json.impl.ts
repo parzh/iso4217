@@ -9,7 +9,7 @@ export interface Intermediate {
 /** @private */
 const parseOptions = {
 	object: true,
-	coerce: true, // TODO: perform coercion manually
+	coerce: true, // TODO: perform coercion manually to preserve raw (string) content
 	trim: true,
 	reversible: true,
 	// arrayNotation: true,
