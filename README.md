@@ -58,3 +58,18 @@ To be done
 ```
 To be done
 ```
+
+## Other API:
+
+_Note: all examples here are using TypeScript syntax._
+
+### `getVersion(): string`
+
+Get version of the standard that is used in this package. Version is an ISO date.
+
+```ts
+import { getVersion } from "@iso4217/json";
+
+getVersion();
+// => "2018-08-29"
+```

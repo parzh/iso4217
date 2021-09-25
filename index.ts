@@ -3,6 +3,7 @@ import path from "path";
 import type JSXml from "./js-xml.type";
 
 export { default as json } from "./iso4217.json";
+export { default as getVersion } from "./get-version.impl";
 
 export * from "./js-xml.type";
 
