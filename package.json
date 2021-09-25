@@ -6,12 +6,12 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parzh/iso-4217.git"
+    "url": "git+https://github.com/parzh/iso4217.git"
   },
   "bugs": {
-    "url": "https://github.com/parzh/iso-4217/issues"
+    "url": "https://github.com/parzh/iso4217/issues"
   },
-  "homepage": "https://github.com/parzh/iso-4217#readme",
+  "homepage": "https://github.com/parzh/iso4217#readme",
   "files": [
     "/**/*.js",
     "/**/*.js.map",

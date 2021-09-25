@@ -14,8 +14,8 @@ The original [ISO 4217 XML file][1] converted to JSON.
   [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
   [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
   [3]: TODO:
-  [4]: https://github.com/parzh/iso-4217
-  [5]: https://github.com/parzh/iso-4217/issues
+  [4]: https://github.com/parzh/iso4217
+  [5]: https://github.com/parzh/iso4217/issues
 
 ## Usage:
 
