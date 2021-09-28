@@ -8,18 +8,18 @@ import writeToFile, { writeJsonToFile } from "./write-to-file";
 const ISO4217_XML_URL =
 	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
 
-async function buildISO4217Json() {
+async function buildDataFile() {
 	const xml = await httpGet(ISO4217_XML_URL);
 
-	writeToFile("iso4217.xml", xml);
+	writeToFile("data.xml", xml);
 
 	const intermediateJson = convertXmlToIntermediateJson(xml);
 
-	writeJsonToFile("iso4217.intermediate.json", intermediateJson);
+	writeJsonToFile("data.intermediate.json", intermediateJson);
 
 	const jsXml = convertIntermediateJsonToJSXml(intermediateJson, "ISO_4217");
 
-	await writeJsonToFile("iso4217.json", jsXml);
+	await writeJsonToFile("data.json", jsXml);
 }
 
-buildISO4217Json();
+buildDataFile();
