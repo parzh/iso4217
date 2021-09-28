@@ -3,7 +3,6 @@
 	"files": [
 		"index.ts",
 		"js-xml.type.ts",
-		"get-version.impl.ts",
 	],
 	"compilerOptions": {
 		"noEmit": false,

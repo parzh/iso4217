@@ -53,33 +53,6 @@ To be done
 To be done
 ```
 
-## Other API:
-
-_Note: all examples here are using TypeScript syntax._
-
-### `getJson(): Promise<JSXml>`
-
-Programmatically read and parse the `iso4217.json` file.
-
-```ts
-import { getJson } from "@iso4217/json";
-
-async function main() {
-  const json = await getJson();
-}
-```
-
-### `getVersion(): string`
-
-Get version of the standard that is used in this package. Version is an ISO date.
-
-```ts
-import { getVersion } from "@iso4217/json";
-
-getVersion();
-// => "2018-08-29"
-```
-
   [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
   [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
   [3]: TODO:
