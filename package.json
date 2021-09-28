@@ -30,8 +30,12 @@
     "build:only": "tsc --project ./tsconfig.production.json",
     "prebuild": "npm run build-data-file-if-needed",
     "build": "npm run build:only",
+    "precompose-version-number:ci": "npm run build-data-file-if-needed",
+    "compose-version-number:ci": "npm run _ts-node -- ./compose-version-number.impl.ts",
     "preversion": "test ${USING_CUSTOM_VERSIONING_SCRIPT:?''}",
-    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version",
+    "_v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version",
+    "v": "npm run _v -- --sign-git-tag",
+    "v:ci": "npm run _v -- $(npm run --silent compose-version-number:ci)",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

@@ -5,6 +5,8 @@ node_modules
 data.xml
 data.intermediate.json
 data.json
+curr.json
+next.json
 
 # Build
 *.js

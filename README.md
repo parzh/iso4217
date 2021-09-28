@@ -53,6 +53,16 @@ To be done
 To be done
 ```
 
+## Versioning strategy:
+
+_TL;DR: Major version repeats XML's `Pblshd` attribute._
+
+Since `@iso4217/json` is an npm package, it follows SemVer versioning strategy, – more precisely, its stricter modification.
+
+Because the information about currencies is a part of public API of the package, whenever the XML is changed by [maintainers][2], the subsequent changes in JSON must be considered a breaking change of this package, i.e., a major package version bump. Thus, the "major" part of a version is basically a copy of the version of the original XML file, stripped of non-numeric characters (e.g., `2018-08-29` becomes `20180829`). This means that the breaking changes are reserved to updates in XML data.
+
+Since the package may also contain other API, and only minor and patch updates are left to use, this additional API (if any) will be updated in a non-breaking manner: bugs will get fixed (with a patch bump), features – either introduced (with a minor bump) or deprecated (with minor or patch update, depending on a feature).
+
   [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
   [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
   [3]: TODO:
