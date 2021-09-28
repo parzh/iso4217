@@ -50,7 +50,7 @@ jobs:
           then
             echo Data is the same, no update is needed
             echo "::set-output name=json::curr"
-          then
+          else
             echo Data has changed, an update is required
             echo "::set-output name=json::next"
           fi
