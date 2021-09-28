@@ -31,7 +31,8 @@
     "prebuild": "npm run build-data-file-if-needed",
     "build": "npm run build:only",
     "preversion": "test ${USING_CUSTOM_VERSIONING_SCRIPT:?''}",
-    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version --sign-git-tag"
+    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "16.9.6",
