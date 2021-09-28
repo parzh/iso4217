@@ -3,8 +3,7 @@ name: Publish XML updates
 on:
   workflow_dispatch: # manually (via GitHub UI)
   schedule:
-    # - cron: "0 12 * * *" # every day at 12:00
-    - cron: "*/5 * * * *" # every 5 minutes # TODO: remove
+    - cron: "0 10 * * 5" # every Friday at 10:00
 
 jobs:
   get-curr:
