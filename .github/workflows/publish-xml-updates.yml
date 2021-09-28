@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: npm install --no-save iso4217-json@npm:@iso4217/json@latest
+      # Using '--force' to bypass self-dependency error
+      - run: npm i --no-save --force iso4217-json@npm:@iso4217/json@latest
       - uses: actions/upload-artifact@v2
         with:
           name: curr.json
