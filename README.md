@@ -11,12 +11,6 @@ The original [ISO 4217 XML file][1] converted to JSON.
 1. The codebase is strongly typed, thanks to using the latest version of TypeScript.
 1. The project [is open source][4], and all the contributions [are very welcome][5]!
 
-  [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
-  [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
-  [3]: TODO:
-  [4]: https://github.com/parzh/iso4217
-  [5]: https://github.com/parzh/iso4217/issues
-
 ## Importing data:
 
 ### TypeScript (NodeJS):
@@ -85,3 +79,9 @@ import { getVersion } from "@iso4217/json";
 getVersion();
 // => "2018-08-29"
 ```
+
+  [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
+  [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
+  [3]: TODO:
+  [4]: https://github.com/parzh/iso4217
+  [5]: https://github.com/parzh/iso4217/issues
