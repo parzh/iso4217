@@ -34,7 +34,7 @@ jobs:
       - get-curr
       - get-next
     outputs:
-      json: ${{ steps.compare.outputs.json }}
+      json: ${{ steps.s1.outputs.o1 }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -43,16 +43,16 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: next.json
-      - id: compare
+      - id: s1
         name: Determine which file to use
         run: |2
           if cmp -s curr.json next.json
           then
             echo Data is the same, no update is needed
-            echo "::set-output name=json::curr"
+            echo "::set-output name=o1::curr"
           else
             echo Data has changed, an update is required
-            echo "::set-output name=json::next"
+            echo "::set-output name=o1::next"
           fi
 
   publish:
