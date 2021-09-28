@@ -21,22 +21,21 @@ export default function httpGet(url: string | URL, options: https.RequestOptions
 	return new Promise((resolve) => {
 		const chunks: Chunk[] = [];
 
-		https.get(url, options)
-			.once("response", (res) => {
-				res
-					.setEncoding("utf8")
-					.on("data", (chunk) => {
-						if (isChunk(chunk)) {
-							chunks.push(chunk);
-						} else {
-							res.destroy(new MalformedChunkError(chunk));
-						}
-					})
-					.once("end", () => {
-						const result = chunks.map(String).join("");
+		https.get(url, options, (res) => {
+			res
+				.setEncoding("utf8")
+				.on("data", (chunk) => {
+					if (isChunk(chunk)) {
+						chunks.push(chunk);
+					} else {
+						res.destroy(new MalformedChunkError(chunk));
+					}
+				})
+				.once("end", () => {
+					const result = chunks.map(String).join("");
 
-						resolve(result);
-					});
-			});
+					resolve(result);
+				});
+		});
 	});
 }
