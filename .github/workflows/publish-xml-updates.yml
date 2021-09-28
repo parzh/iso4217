@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: npm install --no-save @iso4217/json@latest
+      - run: npm install --no-save iso4217-json@npm:@iso4217/json@latest
       - uses: actions/upload-artifact@v2
         with:
           name: curr.json
-          path: node_modules/@iso4217/json/data.json
+          path: node_modules/iso4217-json/data.json
 
   get-next:
     runs-on: ubuntu-20.04
