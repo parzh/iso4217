@@ -8,7 +8,7 @@ import writeToFile, { writeJsonToFile } from "./write-to-file";
 const ISO4217_XML_URL =
 	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
 
-async function buildDataFile() {
+export default async function buildDataFile() {
 	const xml = await httpGet(ISO4217_XML_URL);
 
 	writeToFile("data.xml", xml);
@@ -22,4 +22,5 @@ async function buildDataFile() {
 	await writeJsonToFile("data.json", jsXml);
 }
 
-buildDataFile();
+if (require.main === module)
+	buildDataFile();
