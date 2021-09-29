@@ -6,7 +6,7 @@ export default function composeVersionNumber(): string {
 	const [ version ] = packageJson.version.split(/[+-]/, 1);
 	const [ , minor, patch ] = version.split(".");
 
-	const result = `${major}.${minor}.${patch}`/* TODO: remove prerelease, and set tag to "latest" in workflow */ + `-rc.${Date.now()}`;
+	const result = `${major}.${minor}.${patch}`;
 
 	return result;
 }
