@@ -14,7 +14,7 @@ jobs:
       - run: npm i --no-save --force iso4217-json@npm:@iso4217/json@latest
       - uses: actions/upload-artifact@v2
         with:
-          name: curr.json
+          name: curr
           path: node_modules/iso4217-json/data.json
 
   get-next:
@@ -25,7 +25,7 @@ jobs:
       - run: npm run build-data-file
       - uses: actions/upload-artifact@v2
         with:
-          name: next.json
+          name: next
           path: data.json
 
   compare:
@@ -39,14 +39,15 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
-          name: curr.json
+          name: curr
       - uses: actions/download-artifact@v2
         with:
-          name: next.json
+          name: next
+          path: next
       - id: s1
         name: Determine which file to use
         run: |2
-          if cmp -s curr.json next.json
+          if cmp -s curr/data.json next/data.json
           then
             echo Data is the same, no update is needed
             echo "::set-output name=o1::curr"
@@ -65,8 +66,7 @@ jobs:
           token: ${{ secrets.PARZHBOT_PAT }}
       - uses: actions/download-artifact@v2
         with:
-          name: next.json
-      - run: mv next.json data.json
+          name: next
       - name: Set Git user name and email
         run: |2
           git config --global user.name 'parzhbot'
@@ -78,6 +78,5 @@ jobs:
       - name: Publish to registry
         run: |2
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-
           npm publish --tag next
         # TODO: change tag to "latest"
