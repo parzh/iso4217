@@ -71,10 +71,8 @@ jobs:
         run: |2
           git config --global user.name 'parzhbot'
           git config --global user.email '59538037+parzhbot@users.noreply.github.com'
-      - name: Set new package version
-        run: |2
-          npm run v:ci -- $(npm run compose-version-number:ci --silent)
       - run: npm ci
+      - run: npm run v:ci
       - name: Publish to registry
         run: |2
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
