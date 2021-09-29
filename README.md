@@ -11,7 +11,7 @@ The original [ISO 4217 XML file][1] converted to JSON.
 1. The codebase is strongly typed, thanks to using the latest version of TypeScript.
 1. The project [is open source][4], and all the contributions [are very welcome][5]!
 
-## Importing data:
+## Importing data
 
 ### TypeScript (NodeJS):
 
@@ -53,7 +53,7 @@ To be done
 To be done
 ```
 
-## Versioning strategy:
+## Versioning strategy
 
 _TL;DR: Major version repeats XML's `Pblshd` attribute._
 
