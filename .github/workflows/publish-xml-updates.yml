@@ -32,7 +32,7 @@ jobs:
           git config --global user.name 'parzhbot'
           git config --global user.email '59538037+parzhbot@users.noreply.github.com'
       - run: npm ci
-      - run: npm run v:ci
+      - run: npm version --git-tag-version $(npm run --silent compose-version-number:ci)
       - name: Publish to registry
         run: |2
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
