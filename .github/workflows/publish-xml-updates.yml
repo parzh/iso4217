@@ -78,3 +78,4 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
           npm publish --tag next
         # TODO: change tag to "latest"
+      - run: git push --follow-tags
