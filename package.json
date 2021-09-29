@@ -32,8 +32,8 @@
     "build": "npm run build:only",
     "precompose-version-number:ci": "npm run build-data-file-if-needed",
     "compose-version-number:ci": "npm run _ts-node -- ./compose-version-number.impl.ts",
-    "preversion": "if [ -z \"$USING_CUSTOM_VERSIONING_SCRIPT\" ] || [ -z \"$GITHUB_ACTIONS\" ]; then exit 1; fi",
-    "v": "export USING_CUSTOM_VERSIONING_SCRIPT=$RANDOM; npm version --git-tag-version --sign-git-tag",
+    "preversion": "test ${VERSIONING_IS_ALLOWED:?'Versioning is not allowed!'}",
+    "v": "VERSIONING_IS_ALLOWED=true npm version --git-tag-version --sign-git-tag",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
