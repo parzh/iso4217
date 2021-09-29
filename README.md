@@ -16,29 +16,13 @@ The original [ISO 4217 XML file][1] converted to JSON.
 ### TypeScript (NodeJS):
 
 ```ts
-// import-based approach
 import { json } from "@iso4217/json";
-```
-
-```ts
-// parsing approach
-import { getJson } from "@iso4217/json";
-
-const json = await getJson();
 ```
 
 ### JavaScript (CommonJS):
 
 ```ts
-// require-based approach
 const { json } = require("@iso4217/json");
-```
-
-```ts
-// parsing approach
-const { getJson } = require("@iso4217/json");
-
-const json = await getJson();
 ```
 
 ### JavaScript (ESModules):
@@ -51,6 +35,24 @@ To be done
 
 ```
 To be done
+```
+
+## File-parsing approach of importing the file
+
+In case importing the JSON data using `import` or `require` systems is for some reason not sufficient, the raw file is located at `node_modules/@iso4217/json/data.json`. One can use Node.JS's `fs` module to parse the file into a plain JS object:
+
+```ts
+// TypeScript
+import fs from "fs";
+import type { JSXml } from "@iso4217/json";
+
+async function getData(): JSXml<JSXml[]> {
+  const pathToRawJson = require.resolve("@iso4217/json/data.json");
+  const rawData = await fs.promises.readFile(pathToRawJson, "utf8");
+  const data = JSON.parse(rawData);
+
+  return data;
+}
 ```
 
 ## Versioning strategy
