@@ -24,9 +24,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.PARZHBOT_PAT }}
-      - uses: actions/download-artifact@v2
-        with:
-          name: next
       - name: Set Git user name and email
         run: |2
           git config --global user.name 'parzhbot'
@@ -35,8 +32,4 @@ jobs:
       - run: npm version --git-tag-version $(npm run --silent compose-version-number:ci)
         env:
           VERSIONING_IS_ALLOWED: "true"
-      - name: Publish to registry
-        run: |2
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-          npm publish --tag latest
       - run: git push --follow-tags
