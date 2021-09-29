@@ -7,7 +7,7 @@ The original [ISO 4217 XML file][1] converted to JSON.
 1. All the data is **guaranteed to be up-to-date** at all times:
     - the data in the original XML file [is maintained by the Swiss Association for Standardization][2] (SNV);
     - the data in the resulting JSON file [is automatically updated by CI/CD script][3] on a daily basis;
-1. Thanks to the custom-defined format, no data is lost from the original XML during conversion, – all the information is preserved in the JSON file.
+1. Thanks to the custom-designed format, no data is lost from the original XML during conversion, – all the information is preserved in the JSON file.
 1. The codebase is strongly typed, thanks to using the latest version of TypeScript.
 1. The project [is open source][4], and all the contributions [are very welcome][5]!
 
@@ -65,6 +65,6 @@ Since the package may also contain other API, and only minor and patch updates a
 
   [1]: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml
   [2]: https://www.six-group.com/en/products-services/financial-information/data-standards.html#maintenance-agency
-  [3]: TODO:
+  [3]: https://github.com/parzh/iso4217/blob/28cc291e156b2f648766d7b4fd914d273e985e49/.github/workflows/publish-xml-updates.yml
   [4]: https://github.com/parzh/iso4217
   [5]: https://github.com/parzh/iso4217/issues
