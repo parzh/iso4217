@@ -34,7 +34,7 @@ jobs:
       - get-curr
       - get-next
     outputs:
-      json: ${{ steps.s1.outputs.o1 }}
+      winner: ${{ steps.s1.outputs.o1 }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -58,7 +58,7 @@ jobs:
   publish:
     runs-on: ubuntu-20.04
     needs: compare
-    if: ${{ needs.compare.outputs.json == 'next' }}
+    if: ${{ needs.compare.outputs.winner == 'next' }}
     steps:
       - uses: actions/checkout@v2
         with:
