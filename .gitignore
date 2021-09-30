@@ -4,6 +4,7 @@ node_modules
 # Data
 data.xml
 data.intermediate.json
+data-grouped-by-*.json
 data.json
 curr.json
 next.json
@@ -12,4 +13,5 @@ next.json
 *.js
 *.js.map
 *.d.ts
+!typings.d.ts
 *.tgz
