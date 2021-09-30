@@ -1,7 +1,6 @@
 import httpGet from "./http-get.impl";
-import convertXmlToIntermediateJson from "./convert-xml-to-intermediate-json.impl";
-import convertIntermediateJsonToJSXml from "./convert-intermediate-json-to-js-xml.impl";
 import writeToFile, { writeJsonToFile } from "./write-to-file";
+import convertXmlToJSXml from "./convert-xml-to-js-xml.impl";
 
 /** @private */
 // FIXME: there's a typo here: "currrency"
@@ -13,13 +12,12 @@ export default async function buildDataFile() {
 
 	writeToFile("data.xml", xml);
 
-	const intermediateJson = convertXmlToIntermediateJson(xml);
+	const { result, intermediate } = convertXmlToJSXml(xml, "ISO_4217");
 
-	writeJsonToFile("data.intermediate.json", intermediateJson);
-
-	const jsXml = convertIntermediateJsonToJSXml(intermediateJson, "ISO_4217");
-
-	await writeJsonToFile("data.json", jsXml);
+	await Promise.all([
+		writeJsonToFile("data.intermediate.json", intermediate),
+		writeJsonToFile("data.json", result),
+	]);
 }
 
 if (require.main === module)

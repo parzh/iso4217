@@ -1,12 +1,10 @@
 import os from "os";
 import fs from "fs";
-import path from "path";
 
 export default function writeToFile(pathToFile: string, content: string): Promise<void> {
-	const filepath = path.resolve(__dirname, pathToFile);
 	const tailLine = content.endsWith(os.EOL) ? "" : os.EOL;
 
-	return fs.promises.writeFile(filepath, content + tailLine);
+	return fs.promises.writeFile(pathToFile, content + tailLine);
 }
 
 /** @private */
