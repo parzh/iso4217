@@ -3,7 +3,7 @@
 	"files": [
 		"index.ts",
 		"js-xml.type.ts",
-		"build-grouped-by-data-files.ts.ts",
+		"build-grouped-by-data-files.ts",
 		"write-to-file.ts",
 	],
 	"compilerOptions": {
