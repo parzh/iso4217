@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import packageJson from "./package.json";
 import type { JSXml, Primitive } from "./js-xml.type";
 import json from "./data.json";
@@ -144,11 +145,11 @@ export default async function buildGroupedByDataFiles() {
 		if (strategy === false)
 			continue;
 
-		const filePath = `${packageJson.name}/${fileName}`;
+		const filePath = path.relative(process.cwd(), path.resolve(__dirname, fileName));
 
 		if (strategy !== true) {
 			const isIfExists = strategy === "if-exists";
-			const fileExists = fs.existsSync(fileName);
+			const fileExists = fs.existsSync(filePath);
 
 			if (isIfExists !== fileExists) {
 				log("info", `Skipping file "${filePath}" (strategy "${strategy}")`);
@@ -159,7 +160,7 @@ export default async function buildGroupedByDataFiles() {
 		log("info", `Building file "${filePath}" ...`);
 
 		const dataGrouped = getEntriesGroupedBy(envKeyPostfix as EnvKeyPostfix);
-		const write = writeJsonToFile(fileName, dataGrouped);
+		const write = writeJsonToFile(filePath, dataGrouped);
 		const job = write.then(() => {
 			log("info", `File "${filePath}" is built successfully`);
 		}, (error) => {
