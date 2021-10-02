@@ -32,7 +32,7 @@
     "build": "npm run build:only",
     "precompose-version-number:ci": "npm run build-data-file-if-needed",
     "compose-version-number:ci": "npm run _ts-node -- ./compose-version-number.impl.ts",
-    "preversion": "test ${VERSIONING_IS_ALLOWED:?'Versioning is not allowed!'}",
+    "preversion": "test ${VERSIONING_IS_ALLOWED:?'Please, change version with a custom script!'}",
     "v": "VERSIONING_IS_ALLOWED=true npm version --git-tag-version --sign-git-tag",
     "prepublishOnly": "npm run build",
     "postinstall": "node --unhandled-rejections=strict build-grouped-by-data-files.js"
