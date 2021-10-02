@@ -1,6 +1,6 @@
 # `@iso4217/json`
 
-The original [ISO 4217 XML file][1] converted to JSON.
+[ISO-4217][1] as a JSON.
 
 ## Features of `@iso4217/json`
 1. All the data from the original XML file is **already converted to JSON ahead of time**, – importing this package is actually **like importing a plain JSON file**.
