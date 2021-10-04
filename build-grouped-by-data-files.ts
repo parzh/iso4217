@@ -45,18 +45,18 @@ declare global {
 }
 
 const values = {
-	0b0: false,
-	0b1: true,
+	0b0: "never",
+	0b1: "always",
 	0b10: "if-not-exists",
 	0b11: "if-exists",
 
-	true: true,
-	false: false,
+	true: "always",
+	false: "never",
 
-	always: true,
-	never: false,
+	always: "always",
+	never: "never",
 
-	hard: true,
+	hard: "always",
 	soft: "if-not-exists",
 
 	"if-exists": "if-exists",
@@ -75,13 +75,10 @@ type BuildStrategy = SpecialValues[SpecialValue];
 
 /** @private */
 function getBuildStrategy(value: string | undefined): BuildStrategy {
-	if (value == null)
-		return false;
-
-	if (value in values)
+	if (value && value in values)
 		return values[value as SpecialValue];
 
-	return !!value;
+	return values[String(!!value) as `${boolean}`];
 }
 
 /** @private */
@@ -142,12 +139,12 @@ export default async function buildGroupedByDataFiles() {
 		const envVarValue = process.env[envVarKey];
 		const strategy = getBuildStrategy(envVarValue);
 
-		if (strategy === false)
+		if (strategy === "never")
 			continue;
 
 		const filePath = path.relative(process.cwd(), path.resolve(__dirname, fileName));
 
-		if (strategy !== true) {
+		if (strategy !== "always") {
 			const isIfExists = strategy === "if-exists";
 			const fileExists = fs.existsSync(filePath);
 
