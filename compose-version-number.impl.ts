@@ -13,9 +13,9 @@ function getDataVersionComponents(dataVersion: string): DateSimple {
 	const date = new Date(dataVersion); // assuming that `dataVersion` is a ISO-8601-compliant string 😡
 
 	return {
-		year: String(date.getFullYear()),
-		month: String(date.getMonth() + 1),
-		day: String(date.getDate()),
+		year: String(date.getFullYear()).padStart(4, "0"),
+		month: String(date.getMonth() + 1).padStart(2, "0"),
+		day: String(date.getDate()).padStart(2, "0"),
 	};
 }
 
