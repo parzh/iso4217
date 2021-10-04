@@ -11,6 +11,7 @@ next.json
 
 # Build
 *.js
+!postinstall.js
 *.js.map
 *.d.ts
 !typings.d.ts

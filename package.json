@@ -36,7 +36,7 @@
     "preversion": "test ${VERSIONING_IS_ALLOWED:?'Please, change version with a custom script!'}",
     "v": "VERSIONING_IS_ALLOWED=true npm version --git-tag-version --sign-git-tag",
     "prepublishOnly": "npm run build",
-    "postinstall": "node --unhandled-rejections=strict build-grouped-by-data-files.js"
+    "postinstall": "node --unhandled-rejections=strict postinstall.js"
   },
   "devDependencies": {
     "@types/node": "16.9.6",

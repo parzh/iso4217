@@ -19,6 +19,7 @@
 			"es5",
 		],
 		"strict": true,
+		"checkJs": true,
 		"noUnusedLocals": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
