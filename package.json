@@ -35,7 +35,8 @@
     "compose-version-number:ci": "npm run _ts-node -- ./compose-version-number.impl.ts",
     "preversion": "test ${VERSIONING_IS_ALLOWED:?'Please, change version with a custom script!'}",
     "v": "VERSIONING_IS_ALLOWED=true npm version --git-tag-version --sign-git-tag",
-    "prepublishOnly": "npm run build",
+    "assert-package-and-data-file-versions-match": "npm run _ts-node -- ./assert-package-and-data-file-versions-match.impl.ts",
+    "prepublishOnly": "npm run build && npm run assert-package-and-data-file-versions-match",
     "postinstall": "node --unhandled-rejections=strict postinstall.js"
   },
   "devDependencies": {
