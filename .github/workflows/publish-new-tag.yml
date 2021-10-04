@@ -1,4 +1,4 @@
-name: Publish code changes
+name: Publish new tag
 
 on:
   push:
