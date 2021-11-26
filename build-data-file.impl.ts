@@ -5,7 +5,7 @@ import convertXmlToJSXml from "./convert-xml-to-js-xml.impl";
 /** @private */
 // FIXME: there's a typo here: "currrency"
 const ISO4217_XML_URL =
-	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/amendments/lists/list_one.xml";
+	"https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list_one.xml";
 
 export default async function buildDataFile() {
 	const xml = await httpGet(ISO4217_XML_URL);
