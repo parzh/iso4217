@@ -21,6 +21,7 @@ function postinstall() {
 			const { error } = spawnSync("npm", [ "run", "build" ], {
 				cwd: process.cwd(),
 				timeout: 20000,
+				stdio: "inherit",
 			});
 
 			if (error)
