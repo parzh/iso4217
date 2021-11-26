@@ -17,11 +17,23 @@ export class MalformedChunkError extends Error {
 	}
 }
 
+export class UnexpectedResponseStatus extends Error {
+	constructor(
+		public statusCode?: number,
+		public statusMessage?: string,
+	) {
+		super(`Expected a 2xx status code, received "${statusCode} ${statusMessage}"`);
+	}
+}
+
 export default function httpGet(url: string | URL, options: https.RequestOptions = {}): Promise<string> {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		const chunks: Chunk[] = [];
 
 		https.get(url, options, (res) => {
+			if (!String(res.statusCode).startsWith("2"))
+				return reject(new UnexpectedResponseStatus(res.statusCode, res.statusMessage));
+
 			res
 				.setEncoding("utf8")
 				.on("data", (chunk) => {
