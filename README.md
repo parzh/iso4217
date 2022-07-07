@@ -57,7 +57,15 @@ async function getData(): JSXml<JSXml[]> {
 
 ## Grouping entries
 
-To group entries by a criterion (see available criteria below), a corresponding environment variable must be set in the process that installs the package (i.e., the process that does `npm i @iso4217/json`, or `npm i`, or `npm ci`). Most values of a environment variable will result in the corresponding file being forcefully rebuild, but special keywords can provide a way to tweak this behavior (see available behaviors below).
+To group entries by a criterion (see **Available groupings** below), a corresponding environment variable must be set in the process that installs the package (i.e., the process that does `npm i @iso4217/json`, or `npm i`, or `npm ci`). The environment variables can have virtually any value; most of the values will result in the corresponding file being forcefully rebuild. However, some specific values will be treated as special keywords, which allows tweaking this behavior (see **Available behaviors** below).
+
+Some groupings might not include particular currencies, – for the most part, the exotic ones. For example, Antarctica does not have any universal currency, and the XML file doesn't have `<Ccy>` tag for it. Therefore, Antarctica won't appear anywhere in the "grouped by currency code" file. However, it will appear in "grouped by country name" file, since "ANTARCTICA" is considered a country name by the [maintainers][2] of the XML file.
+
+Generating groupings is done during the `postinstall` phase. If this phase is turned off, the script can be invoked manually:
+
+```
+node path/to/node_modules/@iso4217/json/postinstall.js
+```
 
 ### Available groupings
 
@@ -108,7 +116,7 @@ export ISO4217_JSON_BUILD_DATA_GROUPED_BY_CURRENCY_NUMBER=1
 npm install
 ```
 
-&hellip; logs this output (order is not guaranteed):
+… logs this output (order is not guaranteed):
 
 ```sh
 # @iso4217/json: Skipping file "@iso4217/json/data-grouped-by-currency-name.json" (strategy "if-not-exists")
@@ -118,9 +126,11 @@ npm install
 # @iso4217/json: File "@iso4217/json/data-grouped-by-currency-code.json" is built successfully
 ```
 
-Note, that some groupings don't include particular currencies, – for the most part, exotic ones. For example, Antarctica does not have any universal currency, and the XML file doesn't have `<Ccy>` tag for it. Therefore, Antarctica won't appear anywhere in the "grouped by currency code" file. However, it will appear in "grouped by country name" file, since "ANTARCTICA" is considered a country name by [maintainers][2] of the XML file.
+### Generating `data-grouped-by-*.json` files manually
 
-Also note, that to manually build the files after the package is already installed (in case you forgot to set up environment variables, for example), after properly setting the environment, you should then either run `npm i` / `npm ci`, or run `node_modules/@iso4217/json/build-grouped-by-data-files.js` file with Node.JS executable (`node`); usually it looks like this:
+To manually build the files after the package is already installed (in case you forgot to set up environment variables, for example), after properly setting the environment, you should then either run `npm i` / `npm ci`, or run `node_modules/@iso4217/json/build-grouped-by-data-files.js` file with Node.JS executable (`node`). This file then reads the relevant environment variables and generates all the necessary `data-grouped-by-*.json` files.
+
+This might look like this:
 
 ```sh
 # (using bash syntax)
@@ -135,7 +145,9 @@ _TL;DR: Major version repeats XML's `Pblshd` attribute._
 
 Since `@iso4217/json` is an npm package, it follows SemVer versioning strategy, – more precisely, its stricter modification.
 
-Because the information about currencies is a part of public API of the package, whenever the XML is changed by [maintainers][2], the subsequent changes in JSON must be considered a breaking change of this package, i.e., a major package version bump. Thus, the "major" part of a version is basically a copy of the version of the original XML file, stripped of non-numeric characters (e.g., `2018-08-29` becomes `20180829`). This means that the breaking changes are reserved to updates in XML data.
+Because the information about currencies is a part of public API of the package, whenever the XML is changed by [maintainers][2], the subsequent changes in JSON must be considered a breaking change of this package, i.e., a major package version bump. Thus, the "major" part of a version is basically a copy of the version of the original XML file, converted to `YYYYMMDD` format (e.g., "2018-08-29" → `20180829`, "October 1, 2021" → `20211001`, etc.).
+
+This means that **all future breaking changes are reserved to updates in XML data**, – i.e., there will be no breaking changes to API throughout the lifetime of the package.
 
 Since the package may also contain other API, and only minor and patch updates are left to use, this additional API (if any) will be updated in a non-breaking manner: bugs will get fixed (with a patch bump), features – either introduced (with a minor bump) or deprecated (with minor or patch update, depending on a feature).
 
