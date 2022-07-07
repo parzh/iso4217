@@ -191,7 +191,11 @@ export default async function buildGroupedByDataFiles() {
 		jobs.push(job);
 	}
 
-	await Promise.all(jobs);
+	if (jobs.length === 0)
+		log("info", "No groupings to generate");
+
+	else
+		await Promise.all(jobs);
 }
 
 if (require.main === module)
