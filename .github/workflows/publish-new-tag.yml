@@ -30,7 +30,7 @@ jobs:
 
           incoming_version=$(node -pe "require('./package.json').version;")
 
-          if [ ! -z "$(npm view @iso217/json@$incoming_version version)" ]; then
+          if [ ! -z "$(npm view @iso4217/json@$incoming_version version)" ]; then
             echo "This version ($incoming_version) is already published; please, update version by running 'npm version <version>'"
             exit 1
           fi
