@@ -6,7 +6,7 @@ import json from "./data.json";
 import { writeJsonToFile } from "./write-to-file";
 
 /** @private */
-const envPrefix = "ISO4217_JSON_BUILD_DATA_GROUPED_BY_";
+const envVarKeyPrefix = "ISO4217_JSON_BUILD_DATA_GROUPED_BY_";
 
 /** @private */
 const grouping = {
@@ -36,11 +36,14 @@ const grouping = {
 type Grouping = typeof grouping;
 
 /** @private */
-type EnvKeyPostfix = keyof Grouping;
+type EnvVarKeyPostfix = keyof Grouping;
+
+/** @private */
+type EnvVarKey = `${typeof envVarKeyPrefix}${EnvVarKeyPostfix}`;
 
 declare global {
 	namespace NodeJS {
-		interface ProcessEnv extends Partial<Record<`${typeof envPrefix}${EnvKeyPostfix}`, string>> {}
+		interface ProcessEnv extends Partial<Record<EnvVarKey, string>> {}
 	}
 
 	interface StringConstructor {
@@ -58,7 +61,7 @@ const enum BuildStrategy {
 
 /** @private */
 const buildStrategyAliasesExact = {
-  never: BuildStrategy.Never,
+	never: BuildStrategy.Never,
 	always: BuildStrategy.Always,
 	"if-not-exists": BuildStrategy.IfNotExists,
 	"if-exists": BuildStrategy.IfExists,
@@ -112,7 +115,7 @@ type EntryDataItem = JSXml<Primitive>;
 const entries: Entry[] = json.$data[0].$data;
 
 /** @private */
-function getEntryDataItem(entry: Entry, itemName: Grouping[EnvKeyPostfix]["tagName"]): EntryDataItem | null {
+function getEntryDataItem(entry: Entry, itemName: Grouping[EnvVarKeyPostfix]["tagName"]): EntryDataItem | null {
 	for (const item of entry.$data)
 		if (item.$name === itemName)
 			return item as EntryDataItem;
@@ -121,8 +124,8 @@ function getEntryDataItem(entry: Entry, itemName: Grouping[EnvKeyPostfix]["tagNa
 }
 
 /** @private */
-function getEntriesGroupedBy(envKeyPostfix: EnvKeyPostfix): Record<string, Entry[]> {
-	const { tagName } = grouping[envKeyPostfix];
+function getEntriesGroupedBy(envVarKeyPostfix: EnvVarKeyPostfix): Record<string, Entry[]> {
+	const { tagName } = grouping[envVarKeyPostfix];
 	const grouped = Object.create(null) as Record<string, Entry[]>;
 
 	for (const entry of entries) {
@@ -133,11 +136,8 @@ function getEntriesGroupedBy(envKeyPostfix: EnvKeyPostfix): Record<string, Entry
 
 		const groupName = String(dataItem.$data);
 
-		if (groupName in grouped)
-			grouped[groupName].push(entry);
-
-		else
-			grouped[groupName] = [ entry ];
+		grouped[groupName] ??= [];
+		grouped[groupName].push(entry);
 	}
 
 	return grouped;
@@ -154,9 +154,10 @@ function log(level: "info" | "error", ...values: unknown[]) : void {
 export default async function buildGroupedByDataFiles() {
 	const jobs: Promise<void>[] = [];
 
-	for (const envKeyPostfix in grouping) {
-		const { fileName } = grouping[envKeyPostfix as EnvKeyPostfix];
-		const envVarKey = envPrefix + envKeyPostfix;
+	for (const key in grouping) {
+		const envVarKeyPostfix = key as EnvVarKeyPostfix;
+		const { fileName } = grouping[envVarKeyPostfix];
+		const envVarKey = envVarKeyPrefix + envVarKeyPostfix;
 		const envVarValue = process.env[envVarKey];
 		const strategy = getBuildStrategy(envVarValue);
 
@@ -178,7 +179,7 @@ export default async function buildGroupedByDataFiles() {
 
 		log("info", `Building file "${filePathRelative}" ...`);
 
-		const dataGrouped = getEntriesGroupedBy(envKeyPostfix as EnvKeyPostfix);
+		const dataGrouped = getEntriesGroupedBy(envVarKeyPostfix);
 		const job = writeJsonToFile(filePathAbsolute, dataGrouped)
 			.then(() => {
 				log("info", `File "${filePathRelative}" is built successfully`);
