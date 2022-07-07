@@ -44,41 +44,56 @@ declare global {
 	}
 }
 
-const values = {
-	0b0: "never",
-	0b1: "always",
-	0b10: "if-not-exists",
-	0b11: "if-exists",
+/** @private */
+const enum BuildStrategy {
+	Never = "never",
+	Always = "always",
+	IfNotExists = "if-not-exists",
+	IfExists = "if-exists",
+}
 
-	true: "always",
-	false: "never",
-
-	always: "always",
-	never: "never",
-
-	hard: "always",
-	soft: "if-not-exists",
-
-	"if-exists": "if-exists",
-	"if-not-exists": "if-not-exists",
-	"unless-exists": "if-not-exists",
+/** @private */
+const buildStrategyAliasesExact = {
+  never: BuildStrategy.Never,
+	always: BuildStrategy.Always,
+	"if-not-exists": BuildStrategy.IfNotExists,
+	"if-exists": BuildStrategy.IfExists,
 } as const;
 
 /** @private */
-type SpecialValues = typeof values;
+const buildStrategyAliasesBoolean = {
+	false: BuildStrategy.Never,
+	true: BuildStrategy.Always,
+} as const;
 
 /** @private */
-type SpecialValue = keyof SpecialValues;
+const buildStrategyAliasesNumber = {
+	0: BuildStrategy.Never,
+	1: BuildStrategy.Always,
+	2: BuildStrategy.IfNotExists,
+	3: BuildStrategy.IfExists,
+} as const;
 
 /** @private */
-type BuildStrategy = SpecialValues[SpecialValue];
+const buildStrategyAliases = {
+	...buildStrategyAliasesExact,
+	...buildStrategyAliasesBoolean,
+	...buildStrategyAliasesNumber,
+
+	hard: BuildStrategy.Always,
+	soft: BuildStrategy.IfNotExists,
+	"unless-exists": BuildStrategy.IfNotExists,
+} as const;
 
 /** @private */
-function getBuildStrategy(value: string | undefined): BuildStrategy {
-	if (value && value in values)
-		return values[value as SpecialValue];
+type BuildStrategyAlias = keyof typeof buildStrategyAliases;
 
-	return values[String(!!value) as `${boolean}`];
+/** @private */
+function getBuildStrategy(envVarValue: string | undefined): BuildStrategy {
+	if (envVarValue && envVarValue in buildStrategyAliases)
+		return buildStrategyAliases[envVarValue as BuildStrategyAlias];
+
+	return buildStrategyAliasesBoolean[String(!!envVarValue) as `${boolean}`];
 }
 
 /** @private */
@@ -139,13 +154,13 @@ export default async function buildGroupedByDataFiles() {
 		const envVarValue = process.env[envVarKey];
 		const strategy = getBuildStrategy(envVarValue);
 
-		if (strategy === "never")
+		if (strategy === BuildStrategy.Never)
 			continue;
 
 		const filePath = path.relative(process.cwd(), path.resolve(__dirname, fileName));
 
-		if (strategy !== "always") {
-			const isIfExists = strategy === "if-exists";
+		if (strategy !== BuildStrategy.Always) {
+			const isIfExists = strategy === BuildStrategy.IfExists;
 			const fileExists = fs.existsSync(filePath);
 
 			if (isIfExists !== fileExists) {
