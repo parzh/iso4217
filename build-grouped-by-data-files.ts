@@ -163,27 +163,29 @@ export default async function buildGroupedByDataFiles() {
 		if (strategy === BuildStrategy.Never)
 			continue;
 
-		const filePath = path.relative(process.cwd(), path.resolve(__dirname, fileName));
+		const filePathAbsolute = path.resolve(__dirname, fileName);
+		const filePathRelative = path.relative(process.cwd(), filePathAbsolute);
 
 		if (strategy !== BuildStrategy.Always) {
 			const isIfExists = strategy === BuildStrategy.IfExists;
-			const fileExists = fs.existsSync(filePath);
+			const fileExists = fs.existsSync(filePathAbsolute);
 
 			if (isIfExists !== fileExists) {
-				log("info", `Skipping file "${filePath}" (strategy "${strategy}")`);
+				log("info", `Skipping file "${filePathRelative}" (strategy "${strategy}")`);
 				continue;
 			}
 		}
 
-		log("info", `Building file "${filePath}" ...`);
+		log("info", `Building file "${filePathRelative}" ...`);
 
 		const dataGrouped = getEntriesGroupedBy(envKeyPostfix as EnvKeyPostfix);
-		const write = writeJsonToFile(filePath, dataGrouped);
-		const job = write.then(() => {
-			log("info", `File "${filePath}" is built successfully`);
-		}, (error) => {
-			log("error", `An error encountered while building "${filePath}":`, error);
-		});
+		const job = writeJsonToFile(filePathAbsolute, dataGrouped)
+			.then(() => {
+				log("info", `File "${filePathRelative}" is built successfully`);
+			}, (error) => {
+				log("error", error);
+				log("error", `An error encountered while building "${filePathRelative}" (see above)`);
+			});
 
 		jobs.push(job);
 	}
