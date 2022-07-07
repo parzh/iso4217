@@ -42,6 +42,10 @@ declare global {
 	namespace NodeJS {
 		interface ProcessEnv extends Partial<Record<`${typeof envPrefix}${EnvKeyPostfix}`, string>> {}
 	}
+
+	interface StringConstructor {
+		(value: boolean): `${boolean}`;
+	}
 }
 
 /** @private */
@@ -93,7 +97,9 @@ function getBuildStrategy(envVarValue: string | undefined): BuildStrategy {
 	if (envVarValue && envVarValue in buildStrategyAliases)
 		return buildStrategyAliases[envVarValue as BuildStrategyAlias];
 
-	return buildStrategyAliasesBoolean[String(!!envVarValue) as `${boolean}`];
+	const booleanAlias = String(!!envVarValue);
+
+	return buildStrategyAliasesBoolean[booleanAlias];
 }
 
 /** @private */
