@@ -8,6 +8,7 @@
 		"module": "commonjs",
 		"noEmit": true,
 		"declaration": true,
+		"declarationMap": true,
 		"inlineSources": true,
 		"sourceMap": true,
 		"noEmitOnError": true,

@@ -19,6 +19,7 @@
     "/**/*.js.map",
     "!/**/*.type.js.map",
     "/**/*.d.ts",
+    "/**/*.d.ts.map",
     "/data.json",
     "/README.md"
   ],

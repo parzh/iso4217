@@ -14,5 +14,6 @@ next.json
 !postinstall.js
 *.js.map
 *.d.ts
+*.d.ts.map
 !typings.d.ts
 *.tgz
