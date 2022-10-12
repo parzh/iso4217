@@ -9,9 +9,8 @@ export class VersionMismatchError extends Error {
 
 export default function assertPackageAndDataFileVersionsMatch(): void {
 	const expected = composeVersionNumber();
-	const equals = expected === actual;
 
-	if (!equals)
+	if (expected !== actual)
 		throw new VersionMismatchError(actual, expected);
 }
 
