@@ -9,10 +9,13 @@ jobs:
   get-curr:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
       # Using '--force' to bypass self-dependency error
       - run: npm i --no-save --force iso4217-json@npm:@iso4217/json@latest
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: curr
           path: node_modules/iso4217-json/data.json
@@ -20,51 +23,57 @@ jobs:
   get-next:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - run: npm ci
       - run: npm run build-data-file
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: next
           path: data.json
 
   compare:
-     runs-on: ubuntu-20.04
-     needs:
-       - get-curr
-       - get-next
-     outputs:
-       winner: ${{ steps.s1.outputs.o1 }}
-     steps:
-       - uses: actions/checkout@v2
-       - uses: actions/download-artifact@v2
-         with:
-           name: curr
-           path: curr
-       - uses: actions/download-artifact@v2
-         with:
-           name: next
-           path: next
-       - id: s1
-         name: Determine which file to use
-         run: |2
-           if cmp -s curr/data.json next/data.json
-           then
-             echo Data is the same, no update is needed
-             echo "::set-output name=o1::curr"
-           else
-             echo Data has changed, an update is required
-             echo "::set-output name=o1::next"
-           fi
+    runs-on: ubuntu-20.04
+    needs:
+      - get-curr
+      - get-next
+    outputs:
+      winner: ${{ steps.s1.outputs.o1 }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/download-artifact@v3
+        with:
+          name: curr
+          path: curr
+      - uses: actions/download-artifact@v3
+        with:
+          name: next
+          path: next
+      - id: s1
+        name: Determine which file to use
+        run: |2
+          if cmp -s curr/data.json next/data.json
+          then
+            echo Data is the same, no update is needed
+            echo "::set-output name=o1::curr"
+          else
+            echo Data has changed, an update is required
+            echo "::set-output name=o1::next"
+          fi
 
   publish:
     runs-on: ubuntu-20.04
     needs: compare
-    if: ${{ needs.compare.outputs.winner == 'next' }}
+    if: ${{needs.compare.outputs.winner == 'next'}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PARZHBOT_PAT }}
+          token: ${{secrets.PARZHBOT_PAT}}
       - name: Set Git user name and email
         run: |2
           git config --global user.name 'parzhbot'

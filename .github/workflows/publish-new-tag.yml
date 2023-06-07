@@ -10,10 +10,10 @@ jobs:
     name: Check versions in package* files match
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 18
       - run: |2
           node -e "process.exit(require('./package.json').version !== require('./package-lock.json').version)"
 
@@ -21,10 +21,10 @@ jobs:
     name: Check this version is brand new
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 18
       - run: |2
           set -e
 
@@ -39,10 +39,10 @@ jobs:
     name: Run tests
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 18
       - run: npm ci
       - run: npm t
 
@@ -54,8 +54,8 @@ jobs:
       - check-version-new
       # TODO: - tests
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: |2
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_AUTH_TOKEN}}" > .npmrc
           npm publish --tag latest
