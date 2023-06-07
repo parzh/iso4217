@@ -1,0 +1,20 @@
+{
+	"extends": "./tsconfig.json",
+	"files": [
+		"index.ts",
+		"js-xml.type.ts",
+		"build-grouped-by-data-files.ts",
+		"write-to-file.ts",
+	],
+	"compilerOptions": {
+		"noEmit": false,
+		"target": "es2017",
+		"module": "commonjs",
+		"sourceMap": true,
+		"inlineSources": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmitOnError": true,
+		"removeComments": true,
+	},
+}

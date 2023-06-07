@@ -4,16 +4,7 @@
 	},
 	"compilerOptions": {
 		// Output
-		"target": "es2017",
-		"module": "commonjs",
-		"noEmit": true,
-		"declaration": true,
-		"declarationMap": true,
-		"inlineSources": true,
-		"sourceMap": true,
-		"noEmitOnError": true,
-		"removeComments": true,
-		"resolveJsonModule": true,
+		"noEmit": true, // TODO: override in derived configs if needed
 
 		// Development
 		"lib": [
@@ -25,7 +16,8 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"importsNotUsedAsValues": "error",
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
 		"exactOptionalPropertyTypes": true,
 	},
 }
