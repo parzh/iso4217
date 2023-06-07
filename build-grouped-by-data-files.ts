@@ -56,7 +56,7 @@ const enum BuildStrategy {
 }
 
 /** @private */
-const buildStrategyAliasesExact = {
+const aliasExactToBuildStrategyMap = {
 	never: BuildStrategy.Never,
 	always: BuildStrategy.Always,
 	"if-not-exists": BuildStrategy.IfNotExists,
@@ -64,13 +64,13 @@ const buildStrategyAliasesExact = {
 } as const;
 
 /** @private */
-const buildStrategyAliasesBoolean = {
+const aliasBooleanToBuildStrategyMap = {
 	false: BuildStrategy.Never,
 	true: BuildStrategy.Always,
 } as const;
 
 /** @private */
-const buildStrategyAliasesNumber = {
+const aliasNumberToBuildStrategyMap = {
 	0: BuildStrategy.Never,
 	1: BuildStrategy.Always,
 	2: BuildStrategy.IfNotExists,
@@ -78,10 +78,10 @@ const buildStrategyAliasesNumber = {
 } as const;
 
 /** @private */
-const buildStrategyAliases = {
-	...buildStrategyAliasesExact,
-	...buildStrategyAliasesBoolean,
-	...buildStrategyAliasesNumber,
+const aliasToBuildStrategyMap = {
+	...aliasExactToBuildStrategyMap,
+	...aliasBooleanToBuildStrategyMap,
+	...aliasNumberToBuildStrategyMap,
 
 	hard: BuildStrategy.Always,
 	soft: BuildStrategy.IfNotExists,
@@ -89,16 +89,25 @@ const buildStrategyAliases = {
 } as const;
 
 /** @private */
-type BuildStrategyAlias = keyof typeof buildStrategyAliases;
+type BuildStrategyAlias = keyof typeof aliasToBuildStrategyMap;
+
+/** @private */
+function toBuildStrategyAlias(value: unknown): BuildStrategyAlias {
+	if (typeof value === "string" && value && value in aliasToBuildStrategyMap) {
+		return value as BuildStrategyAlias
+	}
+
+	const booleanAlias = String(!!value) as `${boolean}`
+
+	return booleanAlias
+}
 
 /** @private */
 function getBuildStrategy(envVarValue: string | undefined): BuildStrategy {
-	if (envVarValue && envVarValue in buildStrategyAliases)
-		return buildStrategyAliases[envVarValue as BuildStrategyAlias];
+	const alias = toBuildStrategyAlias(envVarValue)
+	const strategy = aliasToBuildStrategyMap[alias]
 
-	const booleanAlias = String(!!envVarValue) as `${boolean}`;
-
-	return buildStrategyAliasesBoolean[booleanAlias];
+	return strategy
 }
 
 /** @private */
@@ -112,9 +121,11 @@ const entries: Entry[] = json.$data[0].$data;
 
 /** @private */
 function getEntryDataItem(entry: Entry, itemName: Grouping[EnvVarKeyPostfix]["tagName"]): EntryDataItem | null {
-	for (const item of entry.$data)
-		if (item.$name === itemName)
+	for (const item of entry.$data) {
+		if (item.$name === itemName) {
 			return item as EntryDataItem;
+		}
+	}
 
 	return null;
 }
@@ -127,8 +138,9 @@ function getEntriesGroupedBy(envVarKeyPostfix: EnvVarKeyPostfix): Record<string,
 	for (const entry of entries) {
 		const dataItem = getEntryDataItem(entry, tagName);
 
-		if (dataItem == null)
+		if (dataItem == null) {
 			continue;
+		}
 
 		const groupName = String(dataItem.$data);
 
@@ -147,13 +159,29 @@ function log(level: "info" | "error", ...values: unknown[]) : void {
 	console[level](logPrefix, ...values);
 }
 
+/** @private */
+async function writeGroupedDataToFile(
+	dataGrouped: Record<string, Entry[]>,
+	filePathAbsolute: string,
+	filePathRelative: string,
+) {
+	try {
+		await writeJsonToFile(filePathAbsolute, dataGrouped);
+
+		log("info", `File "${filePathRelative}" is built successfully`);
+	} catch (error) {
+		log("error", error);
+		log("error", `An error encountered while building "${filePathRelative}" (see above)`);
+	}
+}
+
 export default async function buildGroupedByDataFiles() {
 	const jobs: Promise<void>[] = [];
 
 	for (const key in grouping) {
 		const envVarKeyPostfix = key as EnvVarKeyPostfix;
 		const { fileName } = grouping[envVarKeyPostfix];
-		const envVarKey = envVarKeyPrefix + envVarKeyPostfix;
+		const envVarKey = `${envVarKeyPrefix}${envVarKeyPostfix}` as const;
 		const envVarValue = process.env[envVarKey];
 		const strategy = getBuildStrategy(envVarValue);
 
@@ -176,13 +204,7 @@ export default async function buildGroupedByDataFiles() {
 		log("info", `Building file "${filePathRelative}" ...`);
 
 		const dataGrouped = getEntriesGroupedBy(envVarKeyPostfix);
-		const job = writeJsonToFile(filePathAbsolute, dataGrouped)
-			.then(() => {
-				log("info", `File "${filePathRelative}" is built successfully`);
-			}, (error) => {
-				log("error", error);
-				log("error", `An error encountered while building "${filePathRelative}" (see above)`);
-			});
+		const job = writeGroupedDataToFile(dataGrouped, filePathAbsolute, filePathRelative);
 
 		jobs.push(job);
 	}
@@ -194,5 +216,6 @@ export default async function buildGroupedByDataFiles() {
 		await Promise.all(jobs);
 }
 
-if (require.main === module)
+if (require.main === module) {
 	buildGroupedByDataFiles();
+}

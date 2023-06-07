@@ -3,24 +3,35 @@ import packageJson from "./package.json";
 
 /** @private */
 interface DateSimple {
-	year: string;
-	month: string;
-	day: string;
+	readonly year: string;
+	readonly month: string;
+	readonly day: string;
 }
 
 /** @private */
-function getDataVersionComponents(dataVersion: string): DateSimple {
-	const date = new Date(dataVersion); // assuming that `dataVersion` is a ISO-8601-compliant string 😡
+function pad(padding: 2 | 4, input: string | number): string {
+	const output = String(input).padStart(padding, "0");
+
+	return output
+}
+
+/** @private */
+function createDateSimple(date: Date): DateSimple {
+	const year = date.getFullYear();
+	const month = date.getMonth() + 1;
+	const day = date.getDate();
 
 	return {
-		year: String(date.getFullYear()).padStart(4, "0"),
-		month: String(date.getMonth() + 1).padStart(2, "0"),
-		day: String(date.getDate()).padStart(2, "0"),
+		year: pad(4, year),
+		month: pad(2, month),
+		day: pad(2, day),
 	};
 }
 
 export default function composeVersionNumber(): string {
-	const { year, month, day } = getDataVersionComponents(data.$attr.Pblshd);
+	const dataVersionDate = new Date(data.$attr.Pblshd)
+
+	const { year, month, day } = createDateSimple(dataVersionDate);
 	const [ version ] = packageJson.version.split(/[+-]/, 1);
 	const [ , minor, patch ] = version.split(".");
 
@@ -29,5 +40,6 @@ export default function composeVersionNumber(): string {
 	return result;
 }
 
-if (require.main === module)
+if (require.main === module) {
 	console.log(composeVersionNumber());
+}

@@ -20,5 +20,6 @@ export default async function buildDataFile() {
 	]);
 }
 
-if (require.main === module)
+if (require.main === module) {
 	buildDataFile();
+}

@@ -2,7 +2,10 @@ import { version as actual } from "./package.json";
 import composeVersionNumber from "./compose-version-number.impl";
 
 export class VersionMismatchError extends Error {
-	constructor(public actual: string, public expected: string) {
+	constructor(
+		public readonly actual: string,
+		public readonly expected: string,
+	) {
 		super(`Package version ("${actual}") does not match data version ("${expected}")`);
 	}
 }
@@ -10,9 +13,11 @@ export class VersionMismatchError extends Error {
 export default function assertPackageAndDataFileVersionsMatch(): void {
 	const expected = composeVersionNumber();
 
-	if (expected !== actual)
+	if (expected !== actual) {
 		throw new VersionMismatchError(actual, expected);
+	}
 }
 
-if (require.main === module)
+if (require.main === module) {
 	assertPackageAndDataFileVersionsMatch();
+}
