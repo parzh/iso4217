@@ -10,8 +10,8 @@ export class VersionMismatchError extends Error {
 	}
 }
 
-export default function assertPackageAndDataFileVersionsMatch(): void {
-	const expected = composeVersionNumber();
+export default async function assertPackageAndDataFileVersionsMatch(): Promise<void> {
+	const expected = await composeVersionNumber();
 
 	if (expected !== actual) {
 		throw new VersionMismatchError(actual, expected);
