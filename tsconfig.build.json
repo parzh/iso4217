@@ -1,6 +1,7 @@
 {
 	"extends": "./tsconfig.json",
 	"files": [
+		"env.d.ts",
 		"index.ts",
 		"js-xml.type.ts",
 		"build-grouped-by-data-files.ts",

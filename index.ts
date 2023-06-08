@@ -1,3 +1,4 @@
+// @ts-ignore
 export { default as json } from "./data.json";
 
 /*
