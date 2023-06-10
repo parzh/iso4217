@@ -38,6 +38,9 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-20.04
+    needs:
+      - check-version-match
+      - check-version-new
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -50,9 +53,7 @@ jobs:
     name: Publish this version
     runs-on: ubuntu-20.04
     needs:
-      - check-version-match
-      - check-version-new
-      # TODO: - tests
+      - test
     steps:
       - uses: actions/checkout@v3
       - run: npm ci
