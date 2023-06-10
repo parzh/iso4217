@@ -1,4 +1,4 @@
-export {}
+import 'vitest/globals'
 
 declare global {
   namespace App {
