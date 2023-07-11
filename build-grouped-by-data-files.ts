@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import packageJson from "./package.json";
 import type { JSXml, Primitive } from "./js-xml.type";
-import getData from "./get-data.impl";
+import json from "./data.json";
 import { writeJsonToFile } from "./write-to-file";
 
 /** @private */
@@ -117,6 +117,9 @@ type Entry = JSXml<JSXml[]>;
 type EntryDataItem = JSXml<Primitive>;
 
 /** @private */
+const entries: Entry[] = json.$data[0].$data;
+
+/** @private */
 function getEntryDataItem(entry: Entry, itemName: Grouping[EnvVarKeyPostfix]["tagName"]): EntryDataItem | null {
 	for (const item of entry.$data) {
 		if (item.$name === itemName) {
@@ -128,7 +131,7 @@ function getEntryDataItem(entry: Entry, itemName: Grouping[EnvVarKeyPostfix]["ta
 }
 
 /** @private */
-function groupEntriesBy(entries: Entry[], envVarKeyPostfix: EnvVarKeyPostfix): Record<string, Entry[]> {
+function getEntriesGroupedBy(envVarKeyPostfix: EnvVarKeyPostfix): Record<string, Entry[]> {
 	const { tagName } = grouping[envVarKeyPostfix];
 	const grouped = Object.create(null) as Record<string, Entry[]>;
 
@@ -157,13 +160,13 @@ function log(level: "info" | "error", ...values: unknown[]) : void {
 }
 
 /** @private */
-async function writeGroupedEntriesToFile(
-	entriesGrouped: Record<string, Entry[]>,
+async function writeGroupedDataToFile(
+	dataGrouped: Record<string, Entry[]>,
 	filePathAbsolute: string,
 	filePathRelative: string,
 ) {
 	try {
-		await writeJsonToFile(filePathAbsolute, entriesGrouped);
+		await writeJsonToFile(filePathAbsolute, dataGrouped);
 
 		log("info", `File "${filePathRelative}" is built successfully`);
 	} catch (error) {
@@ -200,19 +203,17 @@ export default async function buildGroupedByDataFiles() {
 
 		log("info", `Building file "${filePathRelative}" ...`);
 
-		const json = await getData()
-		const entries = json.$data[0].$data
-		const entriesGrouped = groupEntriesBy(entries, envVarKeyPostfix);
-		const writeJob = writeGroupedEntriesToFile(entriesGrouped, filePathAbsolute, filePathRelative);
+		const dataGrouped = getEntriesGroupedBy(envVarKeyPostfix);
+		const job = writeGroupedDataToFile(dataGrouped, filePathAbsolute, filePathRelative);
 
-		jobs.push(writeJob);
+		jobs.push(job);
 	}
 
-	if (jobs.length === 0) {
+	if (jobs.length === 0)
 		log("info", "No groupings to generate");
-	} else {
+
+	else
 		await Promise.all(jobs);
-	}
 }
 
 if (require.main === module) {

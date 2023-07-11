@@ -1,4 +1,4 @@
-import getData from "./get-data.impl";
+import data from "./data.json";
 import packageJson from "./package.json";
 
 /** @private */
@@ -28,9 +28,8 @@ function createDateSimple(date: Date): DateSimple {
 	};
 }
 
-export default async function composeVersionNumber(): Promise<string> {
-	const json = await getData();
-	const dataVersionDate = new Date(json.$attr.Pblshd)
+export default function composeVersionNumber(): string {
+	const dataVersionDate = new Date(data.$attr.Pblshd)
 
 	const { year, month, day } = createDateSimple(dataVersionDate);
 	const [ version ] = packageJson.version.split(/[+-]/, 1);
@@ -42,5 +41,5 @@ export default async function composeVersionNumber(): Promise<string> {
 }
 
 if (require.main === module) {
-	composeVersionNumber().then(console.log);
+	console.log(composeVersionNumber());
 }

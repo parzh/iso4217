@@ -15,13 +15,10 @@ function postinstall() {
 
 		if (!fs.existsSync("./build-grouped-by-data-files.js")) {
 			const { spawnSync } = require("child_process");
-			const { platform } = require("os");
 
 			log("Compiling script file ...");
 
-			const npm = platform() === 'win32' ? "npm.cmd" : "npm"
-
-			const { error } = spawnSync(npm, [ "run", "build" ], {
+			const { error } = spawnSync("npm", [ "run", "build" ], {
 				cwd: process.cwd(),
 				timeout: 20000,
 				stdio: "inherit",
