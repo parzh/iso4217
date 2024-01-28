@@ -10,8 +10,8 @@ jobs:
     name: Check versions in package* files match
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4 # TODO: verify options
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - run: |2
@@ -21,8 +21,8 @@ jobs:
     name: Check this version is brand new
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4 # TODO: verify options
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - run: |2
@@ -39,8 +39,8 @@ jobs:
     name: Run tests
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4 # TODO: verify options
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - run: npm ci
@@ -54,7 +54,7 @@ jobs:
       - check-version-new
       # TODO: - tests
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # TODO: verify options
       - run: npm ci
       - run: |2
           echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_AUTH_TOKEN}}" > .npmrc

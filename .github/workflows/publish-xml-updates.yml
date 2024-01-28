@@ -9,13 +9,13 @@ jobs:
   get-curr:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       # Using '--force' to bypass self-dependency error
       - run: npm i --no-save --force iso4217-json@npm:@iso4217/json@latest
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: curr
           path: node_modules/iso4217-json/data.json
@@ -23,13 +23,13 @@ jobs:
   get-next:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - run: npm ci
       - run: npm run build-data-file
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: next
           path: data.json
@@ -42,15 +42,15 @@ jobs:
     outputs:
       winner: ${{ steps.s1.outputs.o1 }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: curr
           path: curr
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: next
           path: next
@@ -60,10 +60,10 @@ jobs:
           if cmp -s curr/data.json next/data.json
           then
             echo Data is the same, no update is needed
-            echo "::set-output name=o1::curr"
+            echo "o1=curr" >> $GITHUB_OUTPUT
           else
             echo Data has changed, an update is required
-            echo "::set-output name=o1::next"
+            echo "o1=next" >> $GITHUB_OUTPUT
           fi
 
   publish:
@@ -71,7 +71,7 @@ jobs:
     needs: compare
     if: ${{needs.compare.outputs.winner == 'next'}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{secrets.PARZHBOT_PAT}}
       - name: Set Git user name and email
