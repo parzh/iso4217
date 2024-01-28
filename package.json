@@ -2,7 +2,7 @@
   "name": "@iso4217/json",
   "description": "ISO-4217 as a JSON",
   "author": "Dima Parzhitsky <parzhitsky@gmail.com>",
-  "version": "20230101.1.10",
+  "version": "20240101.1.10",
   "license": "MIT",
   "keywords": [],
   "repository": {
