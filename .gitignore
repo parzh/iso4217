@@ -17,3 +17,6 @@ next.json
 *.d.ts.map
 !typings.d.ts
 *.tgz
+
+# Other
+.DS_Store
