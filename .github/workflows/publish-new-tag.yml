@@ -15,7 +15,7 @@ jobs:
         with:
           node-version-file: '/.nvmrc'
       - run: |2
-          node -e "process.exit(require('./package.json').version !== require('./package-lock.json').version)"
+          node -e "process.exit(Number(require('./package.json').version !== require('./package-lock.json').version))"
 
   check-version-new:
     name: Check this version is brand new
