@@ -25,7 +25,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": false,
 		"exactOptionalPropertyTypes": true,
 	},
 }
