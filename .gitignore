@@ -1,22 +1,3 @@
-# Third party
 node_modules
-
-# Data
-data.xml
-data.intermediate.json
-data-grouped-by-*.json
-data.json
-curr.json
-next.json
-
-# Build
-*.js
-!postinstall.js
-*.js.map
-*.d.ts
-*.d.ts.map
-!typings.d.ts
-*.tgz
-
-# Other
 .DS_Store
+*.log
