@@ -1,57 +1,8 @@
 {
-  "name": "@iso4217/json",
-  "description": "ISO-4217 as a JSON",
-  "author": "Dima Parzhitsky <parzhitsky@gmail.com>",
-  "version": "20240625.1.11",
-  "license": "MIT",
-  "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/parzh/iso4217.git"
-  },
-  "bugs": {
-    "url": "https://github.com/parzh/iso4217/issues"
-  },
-  "homepage": "https://github.com/parzh/iso4217#readme",
-  "files": [
-    "/**/*.js",
-    "!/**/*.type.js",
-    "/**/*.js.map",
-    "!/**/*.type.js.map",
-    "/**/*.d.ts",
-    "/**/*.d.ts.map",
-    "/data.json",
-    "/README.md"
-  ],
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "_ts-node": "export NODE_OPTIONS=\"--unhandled-rejections=strict\"; ts-node --project tsconfig.json",
-    "dev": "tsc --project ./tsconfig.json --watch",
-    "build-data-file": "npm run _ts-node -- ./build-data-file.impl.ts",
-    "build-data-file-if-needed": "if [ ! -f \"./data.json\" ]; then npm run build-data-file; fi",
-    "build:only": "tsc --project ./tsconfig.build.json",
-    "prebuild": "npm run build-data-file-if-needed",
-    "build": "npm run build:only",
-    "precompose-version-number:ci": "npm run build-data-file-if-needed",
-    "compose-version-number:ci": "npm run _ts-node -- ./compose-version-number.impl.ts",
-    "assert-package-and-data-file-versions-match": "npm run _ts-node -- ./assert-package-and-data-file-versions-match.impl.ts",
-    "prepublishOnly": "npm run build && npm run assert-package-and-data-file-versions-match",
-    "postinstall": "node --unhandled-rejections=strict postinstall.js"
-  },
-  "devDependencies": {
-    "@types/node": "16.9.6",
-    "@types/xml2json": "0.11.4",
-    "ts-node": "10.2.1",
-    "typescript": "5.5.3",
-    "xml2json": "0.11.2"
-  },
-  "peerDependencies": {
-    "typescript": ">=1.5"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
-  }
+  "name": "iso4217",
+  "version": "2.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/**/*"
+  ]
 }
